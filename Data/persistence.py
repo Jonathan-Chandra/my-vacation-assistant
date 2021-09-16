@@ -1,40 +1,28 @@
-import sqlite3
-from sqlite3 import Error
-import sql_scripts
+import models
+from replit import db
+import json
 
-DATABASE_NAME='database.sqlite3'
 
-def create_connection(database_name: str):
-  """
-  Creates a database connection to the SQLite database passed
-  :param database_name: database name
-  :return: connection object or none
-  """
-  connection = None
-  try:
-    connection = sqlite3.connect(database_name)
-    return connection
-  except Error as e:
-    print(e)
+def add_contact(contact: models.Contact):
+  pass
 
-  return connection
+def get_contact(name: str):
+  pass
 
-  def create_table(connection, sql_script):
-    """
-    Creates a sql table within the connected database passed
-    :param connection: connection object
-    :param sql_script: sql script that contains the table creation
-    :return: none
-    """
-    try:
-      cursor = connection.cursor()
-      cursor.execute(sql_script)
-    except Error as e:
-      print(e)
+def get_all_contacts():
+  pass
 
-def main():
-  return 0
+def add_vacation(vacation: models.Vacation):
+  pass
 
-if __name__ == '__main__':
-  main()
-  
+def get_vacation_info():
+  pass
+
+def add_guest(guest: models.Guest):
+  pass
+
+def add_todo(todo: models.ToDo):
+  pass
+
+def get_my_todos(info: str):
+  pass

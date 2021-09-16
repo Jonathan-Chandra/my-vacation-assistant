@@ -1,10 +1,25 @@
-import discord
+
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+__author__ = "Jonathan Chandra"
+__copyright__ = "None"
+__credits__ = ["Jonathan Chandra"]
+__license__ = "MIT"
+__version__ = "0.0.1"
+__maintainer__ = "Jonathan Chandra"
+__email__ = "chandra.jonathan@gmail.com"
+__status__ = "Prototype"
+
 import os
 import time
+
+import discord
 import discord.ext
 from discord.utils import get
 from discord.ext import commands, tasks
 from discord.ext.commands import has_permissions,  CheckFailure, check
+from replit import db
 #^ basic imports for other features of discord.py and python ^
 
 client = discord.Client()
@@ -19,6 +34,12 @@ async def on_ready():
 @client.command()
 async def ping(ctx):
     await ctx.send("pong!") #simple command so that when you type "!ping" the bot will respond with "pong!"
+    pass
+
+@client.command()
+async def add(ctx, arg1, arg2):
+  await ctx.send("Would you like to add {} {}?".format(arg1,arg2)) 
+  pass
 
 async def kick(ctx, member : discord.Member):
     try:
