@@ -12,7 +12,9 @@ __status__ = "Prototype"
 
 import datetime
 import json
-
+import re
+import phonenumbers
+email_regex = re.compile(r"[^@]+@[^@]+\.[^@]+")
 
 class Contact(object):
   def __init__(self, username: str, first_name: str, last_name: str, email: str, phone_number: str, address: str, splitwise_token:str):
@@ -29,6 +31,20 @@ class Contact(object):
 
   def decode(self):
     return json.loads(self)
+
+  def __eq__(self, other):
+    if (isinstance(other, Contact)):
+      return other.username == self.username and other.first_name == self.first_name and other.last_name == other.last_name and other.email == self.email and other.phone_number == self.phone_number and other.address == self.address
+    return False
+
+  def isValid(self):
+    if not self.username or not self.first_name or not self.last_name or not self.email or not self.phone_number or not self.address:
+      return False
+    elif email_regex.match(self.email) == False:
+      return False
+    elif phonenumbers.is_valid_number(phonenumbers.parse(self.phone_number, "US")) == False:
+      return False
+    return True
 
 
 class Vacation(object):
