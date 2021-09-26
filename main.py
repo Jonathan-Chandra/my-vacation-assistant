@@ -20,11 +20,25 @@ from discord.utils import get
 from discord.ext import commands, tasks
 from discord.ext.commands import has_permissions,  CheckFailure, check
 from replit import db
+import pymongo
+from pymongo import MongoClient
+from pymongo.errors import ConnectionFailure
+import models
 #^ basic imports for other features of discord.py and python ^
 
 client = discord.Client()
 
 client = commands.Bot(command_prefix = '!') #put your own prefix here
+
+client_string = os.getenv("MONGODB_CONNECTION")
+    
+mongo_client = MongoClient(client_string)
+try:
+  # The ping command is cheap and does not require auth.
+  mongo_client.admin.command('ping')
+  print(mongo_client['vacation-bot'])
+except ConnectionFailure:
+  print("Error: Database Server not available")
 
 @client.event
 async def on_ready():
@@ -41,12 +55,22 @@ async def add(ctx, arg1, arg2):
   await ctx.send("Would you like to add {} {}?".format(arg1,arg2)) 
   pass
 
+@client.command()
 async def kick(ctx, member : discord.Member):
     try:
         await member.kick(reason=None)
         await ctx.send("kicked "+member.mention) #simple kick command to demonstrate how to get and use member mentions
     except:
         await ctx.send("bot does not have the kick members permission!")
+
+@client.command()
+async def addContact(ctx, arg1, arg2, arg3, arg4):
+  contact = models.contact()
+  try:
+    pass
+  except:
+    await ctx.send("Unable to add contact information to database. Please try again later.")
+  pass
 
 
 client.run(os.getenv("DISCORD_TOKEN")) #get your bot token and make a file called ".env" then inside the file write TOKEN=put your api key here example in env.txt
